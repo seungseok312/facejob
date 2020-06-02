@@ -117,14 +117,16 @@ body {
 }
 
 .section {
-	margin-top: 100px;
+	margin: 0 auto;
+	margin-top: 40px;
+	
 
 }
 .w3-container {
-	margin-top: 20px;
+	margin-top: 0 auto;
 
 	padding-top: 15px;
-	font-size: 25px;
+	font-size: 35px;
 	color: gray;
 	text-align: center;
 
