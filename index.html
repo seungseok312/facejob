@@ -4,11 +4,12 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link href="https://fonts.googleapis.com/css?family=Jua&display=swap" rel="stylesheet">
+	<!--<link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>-->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
 	<title>직업관상</title>
-	<link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="style.css">
 	<link rel="icon" href="/favicon.ico" type="image/x-icon">
 	<!-- Go to www.addthis.com/dashboard to customize your tools -->
@@ -76,6 +77,9 @@
 	<!--	<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8/dist/teachablemachine-image.min.js"></script> -->
 
+	<!--<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8/dist/teachablemachine-image.min.js"></script> -->
+
 	<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8/dist/teachablemachine-image.min.js"></script>
 
@@ -85,14 +89,16 @@
 				var reader = new FileReader();
 				reader.onload = function(e) {
 					$('.image-upload-wrap').hide();
+					$('#loading').show();
 					$('.file-upload-image').attr('src', e.target.result);
 					$('.file-upload-content').show();
 					$('.image-title').html(input.files[0].name);
 				};
 				reader.readAsDataURL(input.files[0]);
-				init().then(() => {
+				init().then(function() {
 					console.log("hello");
 					predict();
+					$('#loading').hide();
 				});
 			} else {
 				removeUpload();
@@ -113,7 +119,7 @@
 	</script>
 
 	<script type="text/javascript">
-		const URL = "https://teachablemachine.withgoogle.com/models/oWVIf76f7/";
+		const URL = "https://teachablemachine.withgoogle.com/models/oXmWvaDaH/";
 		let model, webcam, labelContainer, maxPredictions;
 		async function init() {
 			const modelURL = URL + "model.json";
@@ -127,91 +133,149 @@
 				labelContainer.appendChild(element);
 			}
 		}
-		//	const modelURL = URL + "model.json";
-		//	const metadataURL = URL + "metadata.json";
-		//	model = await tmImage.load(modelURL, metadataURL);
-		//	maxPredictions = model.getTotalClasses();
-		//	labelContainer = document.getElementById("label-container");
-		//	for (let i = 0; i < maxPredictions; i++) { // and class labels
-		//		labelContainer.appendChild(document.createElement("div"));
-		//	}
-		//	}
 		async function predict() {
 			var image = document.getElementById("face-image")
 			const prediction = await model.predict(image, false);
 			prediction.sort((a, b) => parseFloat(b.probability) - parseFloat(a.probability));
 			console.log(prediction[0].className);
-			var resultTitle, resultExplain;
+			var resultCeleb, resultTitle, resultExplain;
 			switch (prediction[0].className) {
-				case "각설이 품바":
-					resultTitle = "오빠는 풍각쟁이야~!"
+				case "singer":
+					resultTitle = "각설이 품바"
 					resultExplain = " 언제나 흥이 많은 당신, 노래를 좋아하시는군요!"
+					resultCeleb = ""
 					break;
-				case "꽃보다 거지":
-					resultTitle = "500원 만 줘봐~!"
+				case "begger":
+					resultTitle = "꽃보다 거지"
 					resultExplain = " 앵벌이에 능한 당신, 박스가 따뜻한가봐요!"
+					resultCeleb = ""
 					break;
-				case "업소 KING/QUEEN":
-					resultTitle = "바빠서 DM은 못봐요~!"
-					resultExplain = " 사람 홀리는 능력자, 돈을 갉아 모으시네요!"
+				case "night":
+					resultTitle = "업소 KING/QUEEN"
+					resultExplain = " 사람 홀리는 능력자, 돈을 갉아 모으시군요!"
+					resultCeleb = ""
 					break;
-				case "노가다 김씨":
-					resultTitle = "어이 김씨~!"
+				case "kim":
+					resultTitle = "노가다 김씨"
 					resultExplain = " 오늘도 물 대신 막거리, 취해도 건물은 튼튼하네요!"
+					resultCeleb = ""
 					break;
-				case "헬창러":
-					resultTitle = "광배근은 말이야~!"
+				case "sport":
+					resultTitle = "헬창"
 					resultExplain = " 볼펜 대신 아령, 뇌까지 근육이네요!"
+					resultCeleb = ""
 					break;
-				case "국가대빵":
-					resultTitle = "사랑하는 국민여러분~!"
+				case "president":
+					resultTitle = "국가대빵"
 					resultExplain = " 연설에 능한 당신, 국가를 대상으로 짱이시군요!"
+					resultCeleb = ""
 					break;
-				case "바보상자 모델":
-					resultTitle = "꼭 그렇게 다 가져가야만 속이 후련했냐!"
+				case "actor":
+					resultTitle = "바보상자 모델"
 					resultExplain = " 감정을 자유롭게 다스리는 당신, 약간 중2병이 있으시군요!"
+					resultCeleb = ""
 					break;
-				case "키보드워리어":
-					resultTitle = "별로 안이쁜데? 저게 좋냐~?"
+				case "computer":
+					resultTitle = "키보드워리어"
 					resultExplain = " 환상 속에 사는 당신, 이제 일어날 시간이네요!"
+					resultCeleb = ""
 					break;
-				case "크리미널마인드":
-					resultTitle = "눈깔아라~!"
+				case "criminal":
+					resultTitle = "크리미널마인드"
 					resultExplain = " 3초 이상은 싫은 당신, 두부는 언제나 맛있겠군요!"
+					resultCeleb = ""
 					break;
-				case "황금거위":
-					resultTitle = "요즘 교통비가 얼마죠?"
+				case "rich":
+					resultTitle = "황금거위"
 					resultExplain = " 지폐로 X닦는 당신, 걸어 다니는 은행이시군요!"
+					resultCeleb = ""
 					break;
 				default:
 					resultTitle = "알수없음"
 					resultExplain = ""
+					resultCeleb = ""
 			}
 			var title = "<div class='" + prediction[0].className + "-job-title'>" + resultTitle + "</div>"
-			var explain = "<div class='face-explain pt-2'>" + resultExplain + "</div>"
-			$('.result-message').html(resultTitle + resultExplain);
+			var explain = "<div class='job-explain pt-2'>" + resultExplain + "</div>"
+			var celeb = "<div class='" + prediction[0].className + "-job-celeb pt-2 pb-2'>" + resultCeleb + "</div>"
+			$('.result-message').html(title + explain + celeb);
+			var barWidth;
 			for (let i = 0; i < maxPredictions; i++) {
-				var barWidth;
-				for (let i = 0; i < maxPredictions; i++) {
-					if (prediction[i].probability.toFixed(2) > 0.1) {
-						barWidth = Math.round(prediction[i].probability.toFixed(2) * 100) + "%";
-					} else if (prediction[i].probability.toFixed(2) >= 0.01) {
-						barWidth = "4%"
-					} else {
-						barWidth = "2%"
-					}
+				if (prediction[i].probability.toFixed(2) > 0.1) {
+					barWidth = Math.round(prediction[i].probability.toFixed(2) * 100) + "%";
+				} else if (prediction[i].probability.toFixed(2) >= 0.01) {
+					barWidth = "4%"
+				} else {
+					barWidth = "2%"
 				}
-				const classPrediction =
-					prediction[i].className + ": " + prediction[i].probability.toFixed(2);
-				labelContainer.childNodes[i].innerHTML = classPrediction;
+				var labelTitle;
+				switch (prediction[i].className) {
+					case "singer":
+						labelTitle = "가수"
+						break;
+					case "begger":
+						labelTitle = "거지"
+						break;
+					case "night":
+						labelTitle = "화류계"
+						break;
+					case "kim":
+						labelTitle = "노동자"
+						break;
+					case "sport":
+						labelTitle = "운동선수"
+						break;
+					case "president":
+						labelTitle = "대통령"
+						break;
+					case "actor":
+						labelTitle = "연예인"
+						break;
+					case "computer":
+						labelTitle = "히키코모리"
+						break;
+					case "criminal":
+						labelTitle = "무법자"
+						break;
+					case "rich":
+						labelTitle = "사업가"
+						break;
+					default:
+						labelTitle = "알수없음"
+				}
+				var label = "<div class='job-label d-flex align-items-center'>" + labelTitle + "</div>"
+				var bar = "<div class='bar-container position-relative container'><div class='" + prediction[i].className + "-box'></div><div class='d-flex justify-content-center align-items-center " + prediction[i].className + "-bar' style='width: " + barWidth + "'><span class='d-block percent-text'>" + Math.round(prediction[i].probability.toFixed(2) * 100) + "%</span></div></div>"
+				labelContainer.childNodes[i].innerHTML = label + bar;
 			}
 		}
 	</script>
+	
+	
+	<script>
+        function iosApp() {
+            document.getElementById("coupang").style.display="none";
+            $("#coupang ins").hide();
+            document.getElementById("addThis").style.display="none";
+            document.getElementById("disqus_thread").style.display="none";
+            var kakao = document.getElementsByClassName("kakao_ad_area");
+            for (var i = 0; i < kakao.length; i++) {
+              if(kakao[i]) {
+                  kakao[i].style.display="none";
+              }
+            }
+            document.getElementById("yotube-top-link").style.display="none";
+            document.getElementById("yotube-mid-link").style.display="none";
+            document.getElementById("yotube-bottom-link").style.display="none";
+        }
+    </script>
+	
+	
+	
 	<br>
-	<div class="ad-banner">
+	<div class="mt-2 container d-flex justify-content-center ad-banner">
 		<ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-tnz2vhytlkyt" data-ad-width="320" data-ad-height="100"></ins>
 		<script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
-		<div class="ad-banner2">
+		<div class="ad-banner">
 
 			<script src="https://ads-partners.coupang.com/g.js"></script>
 			<script>
@@ -231,12 +295,12 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.-->
-	<div class="footer">
-		<footer>
-			<p>
-				© 직업관상 2020. All Rights Reserved. 
-			</p>
-		</footer>
-	</div>
+<div class="footer">
+	<footer>
+		<p>
+			© 직업관상 2020. All Rights Reserved.
+		</p>
+	</footer>
+</div>
 
 </html>
