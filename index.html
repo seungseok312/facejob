@@ -53,15 +53,15 @@
 		<div class="file-upload-content">
 			<img class="file-upload-image" id="face-image" src="#" alt="your image" />
 
-			<div id="loading" class="animated bounce">
+			<div id="loading" class="animated bounce" style="display: none;">
 				<div class="spinner-border" role="status">
 					<span class="sr-only">Loading...</span>
 				</div>
-				<p class="text-center"></p>
+				<p class="text-center">분석중...</p>
 			</div>
 
 			<p class="result-message"></p>
-			<div id="label-container"></div>
+			<div id="label-container" class="d-flex flex-column justify-content-around"></div>
 			<div class="pt-5 image-title-wrap">
 				<button type="button p-2" onclick="window.location.reload()" class="remove-image" onclick="gaReload()">다시하기
 					<span class="image-title">Uploaded Image</span>
