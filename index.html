@@ -249,41 +249,19 @@
 			}
 		}
 	</script>
-	
-	
-	<script>
-        function iosApp() {
-            document.getElementById("coupang").style.display="none";
-            $("#coupang ins").hide();
-            document.getElementById("addThis").style.display="none";
-            document.getElementById("disqus_thread").style.display="none";
-            var kakao = document.getElementsByClassName("kakao_ad_area");
-            for (var i = 0; i < kakao.length; i++) {
-              if(kakao[i]) {
-                  kakao[i].style.display="none";
-              }
-            }
-            document.getElementById("yotube-top-link").style.display="none";
-            document.getElementById("yotube-mid-link").style.display="none";
-            document.getElementById("yotube-bottom-link").style.display="none";
-        }
-    </script>
-	
-	
-	
+
 	<br>
 	<div class="mt-2 container d-flex justify-content-center ad-banner">
-		<ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-tnz2vhytlkyt" data-ad-width="320" data-ad-height="100"></ins>
+		<script src="https://ads-partners.coupang.com/g.js"></script>
+		<script>
+			new PartnersCoupang.G({
+				id: 250904
+			});
+		</script>
+		<ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-tnz2vhytlkyt" data-ad-width="300" data-ad-height="100"></ins>
 		<script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
-		<div class="ad-banner">
-
-			<script src="https://ads-partners.coupang.com/g.js"></script>
-			<script>
-				new PartnersCoupang.G({
-					id: 250904
-				});
-			</script>
-		</div>
+		<br>
+		<!--<div class="ad-banner"></div>-->
 	</div>
 	<br>
 
