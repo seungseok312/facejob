@@ -1,4 +1,0 @@
-User-Agent:*
-Allow: /
-
-Sitemap: https://facejob.netlify.app/sitemap.xml
